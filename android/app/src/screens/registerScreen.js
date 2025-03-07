@@ -41,7 +41,9 @@ const onClickRegister = (data)=>{
              })
              realm.create('UserLoginId',{
                 userId: newUserId,
+                
              });
+             navigation.popToTop();
          })
         
       }

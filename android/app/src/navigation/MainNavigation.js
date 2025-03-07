@@ -8,6 +8,11 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { TinyText } from "../components/Text"
 import{Icon} from'@rneui/themed';   
 import CartScreen from "../screens/CartScreen"
+import { useNavigation } from "@react-navigation/native"
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { useEffect } from "react";
+import realm from "../store/realm";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,15 +39,42 @@ const TabScreenGroup = () => {
                             textToShow='Explore'
                             textCustomStyle={{ color: focused ? Colors.PRIMARY : Colors.GRAY }}
                         />
-                    )
+                    ),
                 }}
             />
-            {/* add the profile screen using <Tab.Screen /> */}
+
+            <Tab.Screen
+                name='Profile'
+                listeners={() => ({
+                    tabPress:(e) => {
+                        if(userLoginId ===0){
+                            e.preventDefault();
+                            NavigationContainer.navigate('Login');
+                        }
+                    }
+                })}
+            />
+
+            
         </Tab.Navigator >
     )
 };
 
 const MainNavigation = () => {
+    const dispatch = useDispatch();
+    const globalUserLoginId = useSelector((store)=> store.userLoginIdReducer.userLoginId);
+    const setUserLoginId = () => {
+        const data = realm.objects ('UserLoginId')[0];
+        if (data?.userId){
+            dispatch(addUserLoginId(data.userId));
+        }
+    }
+    useEffect(()=>{
+        setUserLoginId();
+    },[]);
+    useEffect(()=>{
+        console.log('user login id:',globalUserLoginId);
+    },[globalUserLoginId]);
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName='Home'

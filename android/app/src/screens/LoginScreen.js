@@ -13,9 +13,34 @@ import { CustomButton } from '../components/Button';
 import *as yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import registerScreen from './registerScreen';
+import realm from '../store/realm';
+import { useDispatch } from 'react-redux';
+
+const dispatch = useDispatch();
 
 const LoginScreen = () => {
     const navigation = useNavigation();
+    const onClickLogin = (data)=>{
+        const userAccount = realm.object('user').find((item) => item.email === data.email);
+        if (userAccount){
+            if(userAccount.email === data.email && userAccount.passsword === data.password){
+                realm.write(()=>{
+                    realm.create('UserLoginId',{
+                        userId: userAccount.id,
+                    });
+                });
+                dispatch(addUserLoginId(userAccount.id));
+                navigation.popToTop();
+
+            }else{
+                alert("Password didn't match!");
+            }
+
+        }else{
+            alert('Email addres is not registered!');
+        }    
+
+    };
     const validateLoginForm = yup.object().shappe({
         email: yup.strong()
             .email('please entervalid email!')
@@ -42,6 +67,7 @@ const LoginScreen = () => {
                         email: '',
                         password: '',
                     }}
+                    onSubmit={(data)=>onClickLogin(data)}
                 >
                     {({
                         handleChange,
@@ -80,6 +106,7 @@ const LoginScreen = () => {
                                 <CustomButton
                                     textToShow='Login'
                                     buttonCustomStyle={styles.loginButton}
+                                    onPress={handleSubmit}
                                 />
                                 <MediumText textToShow='Or' />
                                 <View style={styles.questionContainer}>

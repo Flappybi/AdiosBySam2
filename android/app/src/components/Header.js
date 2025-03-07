@@ -11,6 +11,7 @@ export const CustomHeader = (props) => {
         isShowRightIcon,
         isShowLogo,
         isStackScreen,
+        isWhiteTitle,
     } = props;
 
 const navigation = useNavigation();
@@ -47,7 +48,7 @@ const userLoginId = useSelector((store) => store.userLoginIdReducer.userLoginId)
                     textCustomStyle={[
                         styles.leftText,
                         {
-                            color: isShowLogo ? Colors.WHITE : Colors.BLACK,
+                            color: isShowLogo || isWhiteTitle ? Colors.WHITE : Colors.BLACK,
                             fontFamily: isShowLogo ? 'Oswald-Medium' : null,
                             marginTop: isShowLogo ? 0 : 8,
                             fontSize: isShowLogo ? 24 : 20,
