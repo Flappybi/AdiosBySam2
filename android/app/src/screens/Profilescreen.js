@@ -6,6 +6,44 @@ import { MediumText, SmallText } from '../components/Text';
 import { FeatureList } from '../components/FeatureList';
 import { CustomButton } from '../components/Button';
 import { Icon } from '@rneui/base';
+import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import realm from '../store/realm';
+import { useRef } from 'react';
+import { Modalize } from 'react-native-modalize';
+import { Portal } from 'react-native-portalize';
+import LottieView from 'lottie-react-native';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+
+const onClickYes =() => {
+    const dataToRemove = realm.objects('UserLoginId');
+    // a
+
+    // b
+
+    // c
+    navigation.replace('TabGroup');
+};
+const dispatch = useDispatch();
+const navigation = useNavigation
+const logoutRef = useRef(null);
+
+const showLogoutConfirmation = () => {
+    logoutRef.current?.open();
+};
+const userLoginId = useSelector((store) => store.userLoginId);
+const [profile, setProfile] = useState ({});
+
+const getProfile = () => {
+    const data = realm.objects('User').filtered('id == ${userLoginId}')[0];
+    console.log(data);
+    setProfile(data);
+
+};
+useEffect(()=>{
+    getProfile();
+},[]);
 
 const ProfileScreen = () => {
     return (
@@ -74,6 +112,33 @@ const ProfileScreen = () => {
                     buttonCustomStyle={styles.button}
                 />
             </View>
+            <Portal>
+            <Modalize ref={logoutRef} adjustToContentHeight>
+              <View style = {styles.logoutContentContainer}>
+                <MediumText textToShow='Are you sure want to logout?'/>
+                <View style = {styles.lottieContainer}>
+                    <LottieView
+                        autoPlay
+                        loop
+                        source={require('../assets/lotties/logout-lottie.json')}
+                    />   
+
+                </View>
+                <View style = {styles.logoutButtonContainer}>
+                    <CustomButton
+                        textToShow='NO'
+                        buttonCustomStyle={styles.noButton}
+                        textCustomStyle={styles.noText}
+                    />
+                    <CustomButton
+                        textToShow='YES'
+                        buttonCustomStyle={styles.yesButton}
+                    />    
+                </View>
+                </View>
+            </Modalize>
+            </Portal>
+
         </View>
     )
 };
@@ -107,7 +172,33 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 16,
-    }
+    },
+    logoutContentContainer:{
+        padding: 16,
+        alignItems:'center',
+    },
+    logoutButtonContainer: {
+        flexDirection:'row',
+        flex: 1,
+    },
+    noButton:{
+        flex: 1,
+        margin:8,
+        backgroundColor: colors.WHHITE,
+        borderWidth: 1,
+        borderColor: Colors.PRIMARY,
+    },
+    yesButton:{
+        flex: 1,
+        margin: 8,
+    },
+    noText:{
+        color: Colors.BLACK,
+    },
+    lottieContainer:{
+        width:'50%',
+        height:150,
+    },
 });
 
 export default ProfileScreen;

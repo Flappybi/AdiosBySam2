@@ -13,11 +13,13 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react";
 import realm from "../store/realm";
+import { Host } from "react-native-portalize"
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TabScreenGroup = () => {
     return (
+        <Host>
         <Tab.Navigator
             screenOptions={{ headerShown: false }}
             sceneContainerStyle={{ backgroundColor: Colors.WHITE }}
@@ -57,6 +59,7 @@ const TabScreenGroup = () => {
 
             
         </Tab.Navigator >
+        </Host>
     )
 };
 

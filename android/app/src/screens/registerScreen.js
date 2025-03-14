@@ -17,7 +17,9 @@ import { useNavigation } from '@react-navigation/native';
 import realm from '../store/realm';
 import { generateId } from '../utils/generateId';
 import { useDispatch } from 'react-redux';
-import { UserLoginId } from '../store/realm/models/User';
+import {addUserLoginId} from '../store/redux/actions/userLoginIdAction' 
+
+
 const onClickRegister = (data)=>{
     const allUser = realm.objects('User');
     const userAmount = allUser.length;
