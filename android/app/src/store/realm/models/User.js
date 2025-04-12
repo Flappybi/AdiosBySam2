@@ -3,7 +3,7 @@ export const User = {
     properties:{
         id:'int',
         name:'string',
-        email:'string ' ,
+        email:'string',
         phone:'string',
         password:'string',
         profileImage:'string',

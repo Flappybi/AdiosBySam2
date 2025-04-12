@@ -10,7 +10,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { CustomButton } from '../components/Button';
 import { CustomHeader } from '../components/Header';
-import Colors from '../constants/Colors';
+import Colors from '../constants/Color.js';
 import { LargeText, MediumText, SmallText } from '../components/Text';
 import { Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
@@ -86,7 +86,7 @@ const RegisterScreen = () => {
             <CustomHeader
                 textToShow='Create Account'
                 isStackScreen
-                headerCustomStyle={{ backgroundColor: Colors.WHITE }}
+                headerCustomStyle={{ backgroundColor: "white" }}
             />
             <Formik
                 initialValues={{
@@ -116,7 +116,7 @@ const RegisterScreen = () => {
                             <Icon
                                 name='account'
                                 type='material-community'
-                                color={Colors.GRAY}
+                                color={'#757575'}
                             />
                             <TextInput
                                 onChangeText={handleChange('name')}
@@ -140,7 +140,7 @@ const RegisterScreen = () => {
                             <Icon
                                 name='email'
                                 type='material-community'
-                                color={Colors.GRAY}
+                                color={'#757575'}
                             />
                             <TextInput
                                 onChangeText={handleChange('email')}
@@ -163,7 +163,7 @@ const RegisterScreen = () => {
                             <Icon
                                 name='phone'
                                 type='material-community'
-                                color={Colors.GRAY}
+                                color={'#757575'}
                             />
                             <TextInput
                                 onChangeText={handleChange('Phone')}
@@ -186,7 +186,7 @@ const RegisterScreen = () => {
                             <Icon
                                 name='password'
                                 type='material-community'
-                                color={Colors.GRAY}
+                                color={'#757575'}
                             />
                             <TextInput
                                 onChangeText={handleChange('password')}
@@ -209,7 +209,7 @@ const RegisterScreen = () => {
                             <Icon
                                 name='password'
                                 type='material-community'
-                                color={Colors.GRAY}
+                                color={'#757575'}
                             />
                             <TextInput
                                 onChangeText={handleChange('passwordConfirmation')}
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     loginText: {
-        color: Colors.PRIMARY,
+        color: "#0232A0",
         textDecorationLine: 'underline',
     },
 });

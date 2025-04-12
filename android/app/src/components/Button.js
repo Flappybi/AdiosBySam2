@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { SmallText } from './Text';
-import Colors from '../constants/Colors';
+import Colors from '../constants/Color';
 import { Icon } from '@rneui/base';
 
 export const CustomButton = (props) => {

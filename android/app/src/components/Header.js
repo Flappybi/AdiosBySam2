@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import Colors from '../constants/Colors';
+import Colors from '../constants/Color';
 import { Icon } from '@rneui/themed';
 import { LargeText } from './Text';
 import { useNavigation } from '@react-navigation/native';

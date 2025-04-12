@@ -2,9 +2,9 @@ import React from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import HomeScreen from "../screens/HorizontalList"
-import Color from "../constants/Color"
+import Colors from "../constants/Color"
 import registerScreen from "../screens/registerScreen"
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { TinyText } from "../components/Text"
 import{Icon} from'@rneui/themed';   
 import CartScreen from "../screens/CartScreen"
