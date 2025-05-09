@@ -9,6 +9,7 @@ import { Icon } from '@rneui/base';
 import { useEffect, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { CustomButton } from '../components/Button';
+import { ProductList } from '../components/ProductList';
 
 const { width } = Dimensions.get('window');
 const HomeScreen = () => {
@@ -68,14 +69,24 @@ const HomeScreen = () => {
         contentContainerStyle={{ padding: 8 }}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
+          // <ProductList
+          //    productName={item.name}
+          //    productPrice={item.price}
+          //    source={{uri:item.images[0].link}}
+          // />
+              
           <TouchableOpacity style={styles.productItemContainer}>
             <Image
               style={styles.productImage}
               source={{ uri: item.images[0].link }}
             />
-            {/* <SmallText textToShow={item.name} textCustomStyle={{ fontWeight: 'bold' }} />
-            <SmallText textToShow={'$' + item.price} textCustomStyle={{ marginBottom: 0 }} /> */}
-
+          <TouchableOpacity
+                 style={styles.heartIconContainer}>
+                  <Icon
+                      name= 'cards-heart-outline'
+                      type='material-communinity'
+                      />
+                 </TouchableOpacity>
           </TouchableOpacity>
 
         )}
@@ -100,5 +111,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginHorizontal: 16,
     marginVertical: 0,
-  }
+  },
+  heartIconContainer:{
+    width:40,
+    height:40,
+    borderColor:Colors.BORDER_COLOR,
+    borderWidth:100,
+    justifyContent:'center',
+    alignItems:'center', 
+  },
+ 
 });
