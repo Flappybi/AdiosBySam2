@@ -9,7 +9,43 @@ import { Icon } from '@rneui/base';
 import { useEffect, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { CustomButton } from '../components/Button';
+import { ProductList } from '../components/ProductList';
+import { useSelector } from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
+const navigation = useNavigation();
+const {userLoginId} = useSelector((store)=>store.userLoginIdreducer); 
+  if(userLoginId == 0) {
+    const product = realm.object('Product').filtered(`id == ${productId}`)[0];
+    realm.write(() => {
+      product.islike = !currentLikeStatus;
+    });
+    collectData();
+    const favoriteList = realm.object('FavoriteProduct').filtered(`id == ${userLoginId}`)[0];
+    if (favoriteList) {
+      const isProductExist = favoriteList.productId.includes(productId);
+        realm.write(() => {
+          if (isProductExist) {
+            favoriteList.productId = favoriteList.productId.filter(id => id !== productId);
+          } else {
+            favoriteList.productId.push(productId);
+          }
+        });
+      } else {
+        realm.write(() => {
+          const newId= realm.objects('FavoriteProduct').length + 1;
+          const newFavoriteList = realm.create('FavoriteProduct', {
+            id:newId,
+            idUser: userLoginId,
+            productId: [productId],
+          });
+        });
+      };
+    
+  }else{
+    navigation.navigate('LoginScreen');
+  }
+  
 const { width } = Dimensions.get('window');
 const HomeScreen = () => {
   const [products, setProducts] = useState([]);
@@ -68,16 +104,28 @@ const HomeScreen = () => {
         contentContainerStyle={{ padding: 8 }}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.productItemContainer}>
-            <Image
-              style={styles.productImage}
-              source={{ uri: item.images[0].link }}
+          <View>
+            <ProductList
+              productName={item.name}
+              productPrice={item.price}
+              source={{uri:item.images[0].link}}
+              onPressHeart={() => onclickHeart(item.id,itemm.islike)}
             />
-            {/* <SmallText textToShow={item.name} textCustomStyle={{ fontWeight: 'bold' }} />
-            <SmallText textToShow={'$' + item.price} textCustomStyle={{ marginBottom: 0 }} /> */}
-
-          </TouchableOpacity>
-
+                
+            <TouchableOpacity style={styles.productItemContainer}>
+              <Image
+                style={styles.productImage}
+                source={{ uri: item.images[0].link }}
+              />
+            <TouchableOpacity
+                  style={styles.heartIconContainer}>
+                    <Icon
+                        name= 'cards-heart-outline'
+                        type='material-communinity'
+                        />
+                  </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         )}
       />
 
@@ -100,5 +148,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginHorizontal: 16,
     marginVertical: 0,
-  }
+  },
+  heartIconContainer:{
+    width:40,
+    height:40,
+    borderColor:Colors.BORDER_COLOR,
+    borderWidth:100,
+    justifyContent:'center',
+    alignItems:'center', 
+  },
+ 
 });
