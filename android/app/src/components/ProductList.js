@@ -6,7 +6,7 @@ const itemWidth = (width-(16*3))/2;
 const imageWidth = itemWidth -(16*2);
 
 export const ProductList = (props) =>{
-    const{ productName , productPrice } =props;
+    const{ productName , productPrice ,onPressHeart } =props;
     return(
         <TouchableOpacity style={styles.productItemContainer}>
                     <Image
@@ -18,6 +18,7 @@ export const ProductList = (props) =>{
                     <SmallText textToShow={'$' + productName} textCustomStyle={{ marginBottom: 0 }} /> 
                   <TouchableOpacity
                          style={styles.heartIconContainer}>
+                          onPress+{onPressHeart}
                           <Icon
                               name= 'cards-heart-outline'
                               type='material-communinity'
